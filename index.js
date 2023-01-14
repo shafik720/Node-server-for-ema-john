@@ -19,7 +19,7 @@ async function run(){
         const productCollection = client.db('emaJohn').collection('emaJohnFirst');
         
         
-
+        // getting all products
         app.get('/allProducts', async(req, res)=>{
 
             const query = {};
@@ -27,6 +27,14 @@ async function run(){
 
             const result = await cursor.toArray();
             res.send(result);
+        })
+
+        // getting the number of total products
+        app.get('/productCount',async(req,res)=>{
+            const query = {};
+            const cursor = productCollection.find(query);
+            const result = await cursor.count();
+            res.send({result});
         })
     }
     finally{}
@@ -36,7 +44,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res)=>{
-    res.send('trying ema john');
+    res.send('hello world');
 })
 app.listen(port, ()=>{
     console.log('trying for ema john');
