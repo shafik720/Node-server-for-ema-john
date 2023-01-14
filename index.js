@@ -40,9 +40,9 @@ async function run(){
 
         // getting the number of total products
         app.get('/productCount',async(req,res)=>{
-            const query = {};
-            const cursor = productCollection.find(query);
-            const result = await cursor.count();
+            // const query = {};
+            // const cursor = productCollection.find(query);
+            const result = await productCollection.estimatedDocumentCount();
             res.send({result});
         })
     }
