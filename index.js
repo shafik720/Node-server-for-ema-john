@@ -21,13 +21,22 @@ async function run(){
         
         // getting all products
         app.get('/allProducts', async(req, res)=>{
-
+            console.log('dummy ', req.query);
+            const page = parseInt(req.query.page);
+            const size = parseInt(req.query.size);
             const query = {};
             const cursor =  productCollection.find(query);
 
-            const result = await cursor.toArray();
+            let result;
+            if(page || size){
+                result = await cursor.skip(page * size).limit(size).toArray(); 
+            }else{
+                result = await cursor.toArray();
+            }
+            
             res.send(result);
         })
+
 
         // getting the number of total products
         app.get('/productCount',async(req,res)=>{
